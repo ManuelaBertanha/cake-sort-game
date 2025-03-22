@@ -1,6 +1,7 @@
 import pygame
 import random
 
+from gameState import GameState
 from cakeState import CakeState
 from cake import Cake
 from slice import Slice
@@ -13,7 +14,7 @@ CELL_SIZE = 90
 MARGIN = 10
 CAKE_WIDTH, CAKE_HEIGHT = 75, 75
 SLICE_COUNT = 6  # Cada bolo completo tem 6 fatias
-CAKE_COLORS = [(153, 51, 51), (0, 204, 102), (102, 153, 153), (255, 255, 77)]
+CAKE_COLORS = [(153, 51, 51), (0, 204, 102)]  # [(153, 51, 51), (0, 204, 102), (102, 153, 153), (255, 255, 77)]
 BORDER_COLOR = (102, 102, 102)
 SELECTED_BORDER_COLOR = (255, 117, 26)  # Laranja para indicar seleção
 BORDER_THICKNESS = 1
@@ -49,7 +50,7 @@ def draw_cake(screen, x, y, layers, selected=False):
 
 
 def generate_random_cake():
-    num_layers = random.randint(2, 5)
+    num_layers = random.randint(1, 5)  # Quantidade aleatória de fatias entre 1 e 5
     return [Slice(color, id(Slice)) for color in random.choices(CAKE_COLORS, k=num_layers)]
 
 
@@ -59,8 +60,12 @@ def main():
     pygame.display.set_caption("Cake Sorting Puzzle")
     clock = pygame.time.Clock()
 
+    pygame.font.init()
+    font = pygame.font.SysFont('Arial', 24)
+
     initial_grid = [[None for _ in range(GRID_COLS)] for _ in range(GRID_ROWS)]
-    cake_state = CakeState(initial_grid)
+    game_state = GameState()
+    cake_state = CakeState(initial_grid, game_state)
 
     available_cakes = [Cake(generate_random_cake()) for _ in range(3)]
     selected_cake_index = None
@@ -69,6 +74,9 @@ def main():
     while running:
         screen.fill(BG_COLOR)
         draw_grid(screen)
+
+        score_text = font.render(f"Score: {game_state.score}", True, (0, 0, 0))
+        screen.blit(score_text, (20, 20))
 
         for row in range(GRID_ROWS):
             for col in range(GRID_COLS):
@@ -106,7 +114,7 @@ def main():
                         cake_state.grid[row][col].slices.extend(available_cakes[selected_cake_index].slices)
                         available_cakes[selected_cake_index] = Cake(generate_random_cake())
                         selected_cake_index = None
-                        cake_state.apply_operator()
+                        cake_state.apply_operator(row, col)  # Passa as coordenadas do bolo posicionado
 
         clock.tick(30)
 
