@@ -1,10 +1,10 @@
 import pygame
 import random
 
-from gameState import GameState
-from cakeState import CakeState
-from cake import Cake
-from slice import Slice
+from src.game.gameState import GameState
+from src.game.cakeState import CakeState
+from src.game.cake import Cake
+from src.game.slice import Slice
 
 # Configurações iniciais
 WIDTH, HEIGHT = 800, 600
@@ -14,8 +14,8 @@ CELL_SIZE = 90
 MARGIN = 10
 CAKE_WIDTH, CAKE_HEIGHT = 75, 75
 SLICE_COUNT = 6  # Cada bolo completo tem 6 fatias
-CAKE_COLORS = [(153, 51, 51), (0, 204, 102)]  # [(153, 51, 51), (0, 204, 102), (102, 153, 153), (255, 255, 77)]
-COLOR_NAMES = {(153, 51, 51): "vermelho", (0, 204, 102): "verde"}
+CAKE_COLORS = [(153, 51, 51), (0, 204, 102)]
+COLOR_NAMES = {(153, 51, 51): "vermelho", (0, 204, 102): "verde"}  # (102, 153, 153): "azul", (255, 255, 77): "amarelo"
 BORDER_COLOR = (102, 102, 102)
 SELECTED_BORDER_COLOR = (255, 117, 26)  # Laranja para indicar seleção
 BORDER_THICKNESS = 1

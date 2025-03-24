@@ -1,4 +1,4 @@
-from cake import Cake, SLICE_COUNT
+from src.game.cake import Cake, SLICE_COUNT
 
 
 class CakeState:

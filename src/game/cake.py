@@ -1,5 +1,3 @@
-from slice import Slice
-
 SLICE_COUNT = 6  # Número máximo de fatias por bolo
 
 
