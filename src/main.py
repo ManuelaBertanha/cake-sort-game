@@ -15,6 +15,7 @@ MARGIN = 10
 CAKE_WIDTH, CAKE_HEIGHT = 75, 75
 SLICE_COUNT = 6  # Cada bolo completo tem 6 fatias
 CAKE_COLORS = [(153, 51, 51), (0, 204, 102)]  # [(153, 51, 51), (0, 204, 102), (102, 153, 153), (255, 255, 77)]
+COLOR_NAMES = {(153, 51, 51): "vermelho", (0, 204, 102): "verde"}
 BORDER_COLOR = (102, 102, 102)
 SELECTED_BORDER_COLOR = (255, 117, 26)  # Laranja para indicar seleção
 BORDER_THICKNESS = 1
@@ -51,7 +52,7 @@ def draw_cake(screen, x, y, layers, selected=False):
 
 def generate_random_cake():
     num_layers = random.randint(1, 5)  # Quantidade aleatória de fatias entre 1 e 5
-    return [Slice(color, id(Slice)) for color in random.choices(CAKE_COLORS, k=num_layers)]
+    return [Slice(color, COLOR_NAMES[color]) for color in random.choices(CAKE_COLORS, k=num_layers)]
 
 
 def main():

@@ -33,12 +33,9 @@ class CakeState:
             if total_current > total_neighbor:
                 # O bolo atual assimila as fatias dessa cor do bolo vizinho
                 slices_to_transfer = [s for s in neighbor_cake.slices if s.color == color][:total_neighbor]
-                space_available = SLICE_COUNT - current_cake.count_slices()
-                if len(slices_to_transfer) > space_available:
-                    slices_to_transfer = slices_to_transfer[:space_available]
 
                 for slice_obj in slices_to_transfer:
-                    neighbor_cake.remove_single_slice(slice_obj.color)
+                    neighbor_cake.remove_single_slice(slice_obj)
                     if len(current_cake.slices) < SLICE_COUNT:
                         current_cake.add_slice(slice_obj)
                     else:
@@ -56,12 +53,9 @@ class CakeState:
             elif total_neighbor > total_current:
                 # O bolo vizinho assimila as fatias dessa cor do bolo atual
                 slices_to_transfer = [s for s in current_cake.slices if s.color == color][:total_current]
-                space_available = SLICE_COUNT - neighbor_cake.count_slices()
-                if len(slices_to_transfer) > space_available:
-                    slices_to_transfer = slices_to_transfer[:space_available]
 
                 for slice_obj in slices_to_transfer:
-                    current_cake.remove_single_slice(slice_obj.color)  # current_cake.slices.remove(slice_obj)
+                    current_cake.remove_single_slice(slice_obj)  # current_cake.slices.remove(slice_obj)
                     if len(neighbor_cake.slices) < SLICE_COUNT:
                         neighbor_cake.add_slice(slice_obj)
                     else:
@@ -88,7 +82,7 @@ class CakeState:
                     # Todas as fatias cabem no bolo atual
                     slices_to_transfer = [s for s in neighbor_cake.slices if s.color == color]
                     for slice_obj in slices_to_transfer:
-                        neighbor_cake.remove_single_slice(slice_obj.color)
+                        neighbor_cake.remove_single_slice(slice_obj)
                         if len(current_cake.slices) < SLICE_COUNT:
                             current_cake.add_slice(slice_obj)
                         else:
@@ -108,7 +102,7 @@ class CakeState:
                     # Todas as fatias cabem no bolo vizinho
                     slices_to_transfer = [s for s in current_cake.slices if s.color == color]
                     for slice_obj in slices_to_transfer:
-                        current_cake.remove_single_slice(slice_obj.color)
+                        current_cake.remove_single_slice(slice_obj)
                         if len(neighbor_cake.slices) < SLICE_COUNT:
                             neighbor_cake.add_slice(slice_obj)
                         else:
@@ -130,7 +124,7 @@ class CakeState:
                         # Dá preferência ao bolo atual
                         slices_to_transfer = [s for s in neighbor_cake.slices if s.color == color][:space_in_current]
                         for slice_obj in slices_to_transfer:
-                            neighbor_cake.remove_single_slice(slice_obj.color)
+                            neighbor_cake.remove_single_slice(slice_obj)
                             if len(current_cake.slices) < SLICE_COUNT:
                                 current_cake.add_slice(slice_obj)
                             else:
@@ -150,7 +144,7 @@ class CakeState:
                         # Dá preferência ao bolo vizinho
                         slices_to_transfer = [s for s in current_cake.slices if s.color == color][:space_in_neighbor]
                         for slice_obj in slices_to_transfer:
-                            current_cake.remove_single_slice(slice_obj.color)
+                            current_cake.remove_single_slice(slice_obj)
                             if len(neighbor_cake.slices) < SLICE_COUNT:
                                 neighbor_cake.add_slice(slice_obj)
                             else:

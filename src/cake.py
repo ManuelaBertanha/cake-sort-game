@@ -23,18 +23,14 @@ class Cake:
                 self.slices[i] = new_slice  # Substitui pela nova fatia
                 return removed_slice  # Retorna a fatia removida
 
-        # Caso não haja fatia com cor diferente (teoricamente improvável)
-        return None
+        # Caso não haja fatia com cor diferente, retorna ela mesma para que a fatia não se perca
+        return new_slice
 
-    def remove_slice(self, color):
-        """Remove todas as fatias de uma cor específica de um bolo."""
-        self.slices = [s for s in self.slices if s.color != color]
-
-    def remove_single_slice(self, color):
+    def remove_single_slice(self, target_slice):
         """Remove apenas uma fatia específica pela cor."""
-        for s in self.slices:
-            if s.color == color:
-                self.slices.remove(s)
+        for i, slice_obj in enumerate(self.slices):
+            if slice_obj.equals(target_slice):
+                del self.slices[i]
                 break
 
     def is_complete(self):
