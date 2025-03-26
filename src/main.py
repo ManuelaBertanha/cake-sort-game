@@ -55,6 +55,19 @@ def generate_random_cake():
     return [Slice(color, COLOR_NAMES[color]) for color in random.choices(CAKE_COLORS, k=num_layers)]
 
 
+def show_victory_screen(screen, font, score):
+    screen.fill((200, 255, 200))
+    
+    victory_text = font.render("YOU WON THE GAME!!", True, (0, 0, 0))
+    screen.blit(victory_text, (WIDTH // 2 - victory_text.get_width() // 2, HEIGHT // 2 - victory_text.get_height() // 2))
+    
+    score_text = font.render(f"YOUR SCORE: {score}", True, (0, 0, 0))
+    screen.blit(score_text, (WIDTH // 2 - score_text.get_width() // 2, HEIGHT // 2 + score_text.get_height()))
+    
+    pygame.display.flip()
+    pygame.time.wait(3000)
+    
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -71,8 +84,7 @@ def main():
     available_cakes = [Cake(generate_random_cake()) for _ in range(3)]
     selected_cake_index = None
 
-    running = True
-    while running:
+    while game_state.running == 0:
         screen.fill(BG_COLOR)
         draw_grid(screen)
 
@@ -95,7 +107,7 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                game_state.running = 2
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
 
@@ -118,6 +130,9 @@ def main():
                         cake_state.apply_operator(row, col)  # Passa as coordenadas do bolo posicionado
 
         clock.tick(30)
+
+    if game_state.running == 1:
+        show_victory_screen(screen, font, game_state.score)
 
     pygame.quit()
 

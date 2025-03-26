@@ -12,6 +12,9 @@ class CakeState:
                 if self.grid[row][col] is cake:
                     self.grid[row][col] = None
                     self.game_state.score += 1
+                    break
+        if self.game_state.score == 10:
+            self.game_state.end_game()
 
     def analyze_and_merge(self, current_cake, neighbor_cake):
         """Analisa as cores e realiza a combinação entre dois bolos."""
